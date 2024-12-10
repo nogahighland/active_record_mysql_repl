@@ -7,18 +7,18 @@ require 'active_support/all'
 module ActiveRecordMysqlRepl
   module Database
     module Loader
-      def self.load_tables(army_config, port)
+      def self.load_tables(db_config_key, army_config, port)
         puts "Loading tables".gray
 
         tables = ActiveRecord::Base.connection.tables
         association_settings = Associations.load(army_config.associations)
 
-        analyzed_tables = Associations.analyze(tables, association_settings)
+        analyzed_tables = Associations.analyze(tables, association_settings[db_config_key])
         skipped = []
         analyzed_tables.each do |analyzed_table|
           # defer model definition for tables with `has_many: :xxx, through: xxx` associations
           if analyzed_table.has_many.any? { |hm| hm.is_a?(Hash) && hm.key?(:through) }
-            skipped << table
+            skipped << analyzed_table
             next
           end
           define_model(analyzed_table)

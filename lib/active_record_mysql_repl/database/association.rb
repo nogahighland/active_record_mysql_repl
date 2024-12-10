@@ -34,7 +34,7 @@ module ActiveRecordMysqlRepl
           association_setting = association_settings[table_name]
           columns = ActiveRecord::Base.connection.columns(table_name)
           columns.each do |column|
-            next if association_setting.present? && association_setting.ignore_columns[table_name].include?(column.name)
+            next if association_setting.present? && association_settings.ignore_columns(table_name).include?(column.name)
 
             associatable = column.name.gsub(/_id$/, '') if column.name.end_with?('_id')
             next if associatable.blank? || associatable == 'class' # reserved word
@@ -56,7 +56,7 @@ module ActiveRecordMysqlRepl
 
           # merge yaml settings
           [:has_many, :belongs_to].each do |type|
-            ass = table_associations_setting.fetch(type.to_s, []).symbolize_keys
+            ass = association_setting.fetch(type.to_s, []).map(&:symbolize_keys)
             table.send(type).concat(ass) unless ass.blank?
           end
         end
@@ -72,7 +72,7 @@ module ActiveRecordMysqlRepl
 
       def [](table)
         table = (@association.keys - ['ignore_columns']) & [table]
-        @association[table] if table.present?
+        @association[table.first] if table.present?
       end
 
       def ignore_columns(table)

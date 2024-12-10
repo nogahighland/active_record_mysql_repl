@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "database_config"
+  ],
+  "properties": {
+    "database_config": {
+      "type": "string",
+      "description": "Relative path from .army.yml to the database configuration file."
+    },
+    "associations": {
+      "type": "string",
+      "description": "Relative path from .army.yml to the database association file."
+    },
+    "extensions_dir": {
+      "type": "string",
+      "description": "Relative path from .army.yml to the ruby extension files directory."
+    },
+    "pryrc": {
+      "type": "string",
+      "description": "Relative path from .army.yml to the ruby extension files directory."
+    }
+  }
+}

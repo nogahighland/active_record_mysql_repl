@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "patternProperties": {
+    ".*": {
+      "$ref": "#/$defs/connection"
+    }
+  },
+  "$defs": {
+    "connection": {
+      "type": "object",
+      "required": [
+        "remote_host",
+        "database",
+        "port",
+        "user",
+        "password"
+      ],
+      "dependencies": {
+        "bastion": [
+          "ssh_user"
+        ]
+      },
+      "properties": {
+        "remote_host": {
+          "type": "string",
+          "description": "The IP address of the remote host to connect to."
+        },
+        "database": {
+          "type": "string",
+          "description": "The name of the database to connect to."
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "user": {
+          "type": "string",
+          "description": "The username to use when connecting to the database."
+        },
+        "password": {
+          "type": "string",
+          "description": "The password to use when connecting to the database."
+        },
+        "bastion": {
+          "type": "string",
+          "description": "The bastion host to connect through."
+        },
+        "ssh_user": {
+          "type": "string",
+          "description": "The username to use when connecting to the bastion host."
+        },
+        "prompt_color": {
+          "type": "string",
+          "description": "The color to use for the prompt.\nhttps://github.com/fazibear/colorize/blob/master/lib/colorize/class_methods.rb"
+        }
+      }
+    }
+  }
+}

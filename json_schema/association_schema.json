@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "patternProperties": {
+    ".*": {
+      "patternProperties": {
+        ".*": {
+          "properties": {
+            "belongs_to": {
+              "type": "array",
+              "title": "belongs_to association",
+              "description": "`belongs_to` association definitions of each table.\nhttps://guides.rubyonrails.org/association_basics.html",
+              "items": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Custom association name to the model to access the association from it."
+                  },
+                  "foreign_key": {
+                    "type": "string",
+                    "description": "The :foreign_key option lets you set the name of the foreign key directly:"
+                  },
+                  "class_name": {
+                    "type": "string",
+                    "description": "By explicitly declaring the class_name option, you can create associations across different namespaces, ensuring the correct models are linked regardless of their module scope."
+                  },
+                  "through": {
+                    "type": "string",
+                    "description": "https://guides.rubyonrails.org/association_basics.html#has-many-through"
+                  }
+                }
+              }
+            },
+            "has_many": {
+              "type": "array",
+              "title": "has_many association",
+              "description": "`has_many` association definitions of each table.\nhttps://guides.rubyonrails.org/association_basics.html",
+              "items": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Custom association name to the model to access the association from it."
+                  },
+                  "foreign_key": {
+                    "type": "string",
+                    "description": "The :foreign_key option lets you set the name of the foreign key directly:"
+                  },
+                  "class_name": {
+                    "type": "string",
+                    "description": "By explicitly declaring the class_name option, you can create associations across different namespaces, ensuring the correct models are linked regardless of their module scope."
+                  },
+                  "through": {
+                    "type": "string",
+                    "description": "https://guides.rubyonrails.org/association_basics.html#has-many-through"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "properties": {
+        "ignore_columns": {
+          "title": "ignore_columns",
+          "description": "Exclusion list from auto-association. Typically, `*_id` columns are subjected to be wrongly associated to the table itself.",
+          "type": "object",
+          "patternProperties": {
+            ".*": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Exclusion columns name from auto-association. Typically, `*_id` columns are subjected to be wrongly associated to the table itself."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

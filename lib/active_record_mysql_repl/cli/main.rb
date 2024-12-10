@@ -11,7 +11,7 @@ module ActiveRecordMysqlRepl
     module Main
       def self.run(args)
         opts = CLI::Options.parse(args)
-        army_config = Config.load(opts[:c] || '~/.armyrc')
+        army_config = Config.load(opts[:c] || '~/.army.yml')
 
         db_configs = Database::Configs.load(army_config.database_config)
         db_config_key = opts[:d]
@@ -22,7 +22,7 @@ module ActiveRecordMysqlRepl
 
         SSHTunnel.tunnel(db_config) do |port|
           Database::Connection.connect(db_config, port) do
-            Database::Loader.load_tables(army_config, port)
+            Database::Loader.load_tables(db_config_key, army_config, port)
 
             if generate_erf
               require 'rails_erd/diagram/graphviz'
