@@ -11,7 +11,7 @@ module ActiverecordMysqlRepl
       def tabulate(orientation = nil)
         arr = if self.is_a?(Array)
                 self
-              elsif self.is_a?(ActiveRecord::Relation)
+              elsif self.is_a?(::ActiveRecord::Relation)
                 self.to_a
               else
                 [self]
