@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "active_record_mysql_repl"
+
+ActiveRecordMysqlRepl::CLI::Main.run(ARGV)
