@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = 'MySQL REPL featured by ActiveRecord and Pry'
   spec.description = 'MySQL REPL featured by ActiveRecord and Pry'
-  spec.homepage = 'https://github.com/nogahighland/activerecord_mysql_repl'
+  spec.homepage = 'https://github.com/nogahighland/active_record_mysql_repl'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 3.0.0'
 
@@ -35,14 +35,14 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'solargraph'
 
   spec.add_dependency 'activerecord', '~> 7.1'
-  spec.add_dependency 'activesupport'
+  spec.add_dependency 'activesupport','~>7.2'
   spec.add_dependency 'awesome_print', '~> 1.9'
   spec.add_dependency 'clipboard', '~> 2.0'
-  spec.add_dependency 'colorize'
-  spec.add_dependency 'csv'
+  spec.add_dependency 'colorize', '~> 1.1'
+  spec.add_dependency 'csv', '~> 3.3.0'
   spec.add_dependency 'mysql2', '~> 0.5.6'
-  spec.add_dependency 'net-ssh'
-  spec.add_dependency 'net-ssh-gateway'
+  spec.add_dependency 'net-ssh', '~> 7.3'
+  spec.add_dependency 'net-ssh-gateway', '~> 2.0'
   spec.add_dependency 'pry', '~> 0.14.2'
   spec.add_dependency 'rails-erd', '~> 1.7'
   spec.add_dependency 'terminal-table', '~> 3.0'
