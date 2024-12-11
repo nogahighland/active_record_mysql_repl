@@ -1,0 +1,9 @@
+begin
+  require "awesome_print"
+  Pry.config.print = proc do |_output, value, pry_instance|
+    value = value.is_a?(String) ? value : value.ai
+    pry_instance.pager.page(value)
+  end
+rescue LoadError
+  puts "no awesome_print :("
+end

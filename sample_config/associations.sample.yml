@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nogahighland/active_record_mysql_repl/refs/heads/main/json_schema/association_schema.json
+
+test:
+  users:
+    belongs_to:
+      - name: profile
+        foreign_key: id
+        class_name: UserProfile
+
+  ignore_columns:
+    user:
+    - login_id
+

@@ -10,15 +10,24 @@
       "description": "Relative path from .army.yml to the database configuration file."
     },
     "associations": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "description": "Relative path from .army.yml to the database association file."
     },
     "extensions_dir": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "description": "Relative path from .army.yml to the ruby extension files directory."
     },
     "pryrc": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "description": "Relative path from .army.yml to the ruby extension files directory."
     }
   }

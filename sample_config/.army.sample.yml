@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nogahighland/active_record_mysql_repl/refs/heads/main/json_schema/army_schema.json
+
+database_config: ./databases.sample.yml
+associations: ./associations.sample.yml
+extensions_dir:
+pryrc: ./.pryrc.sample

@@ -8,7 +8,9 @@
 /tmp/
 /vendor
 /sample_config/*
+!/sample_config/**/*sample*
 *.pdf
 
 # rspec failure tracking
 .rspec_status
+*.gem
