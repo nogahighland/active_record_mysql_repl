@@ -10,6 +10,11 @@ module ActiveRecordMysqlRepl
   module CLI
     module Main
       def self.run(args)
+        if args[0] == '--zsh-completion'
+          puts ZshCompletion.generate
+          return
+        end
+
         opts = CLI::Options.parse(args)
         army_config = Config.load(opts[:c] || '~/.army.yml')
 

@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
+# frozen_string_literal: true
 
-local ARMY_DIR=$(dirname $(realpath "$0"))
-local BUNDLE_GEMFILE=${ARMY_DIR}/../Gemfile
+COMPLETION = <<~COMPLETION
+#!/usr/bin/env bash
 
 function _army() {
   _arguments \
@@ -24,3 +24,14 @@ function _database {
 }
 
 compdef _army army
+COMPLETION
+
+module ActiveRecordMysqlRepl
+  module CLI
+    module ZshCompletion
+      def self.generate
+        COMPLETION
+      end
+    end
+  end
+end
