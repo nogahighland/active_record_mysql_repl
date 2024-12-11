@@ -33,7 +33,10 @@ module ActiveRecordMysqlRepl
             end
 
             require 'active_record_mysql_repl/extensions'
-            Extensions.load_external(army_config.extensions_dir) if army_config.extensions_dir.present?
+            if army_config.extensions_dir.present?
+              puts "Loading custom extensions from #{army_config.extensions_dir}".gray
+              Extensions.load_external(army_config.extensions_dir)
+            end
 
             clear_screen
             Pry.config.prompt_name = db_config_key.black.send(:"on_#{db_config.prompt_color}")
