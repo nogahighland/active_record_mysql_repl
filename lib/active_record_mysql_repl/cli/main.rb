@@ -16,7 +16,7 @@ module ActiveRecordMysqlRepl
         end
 
         opts = CLI::Options.parse(args)
-        army_config = Config.load(opts[:c] || '~/.army.yml')
+        army_config = Config.load(opts[:c] || File.join(Dir.home, '.army.yml'))
 
         db_configs = Database::Configs.load(army_config.database_config)
         db_config_key = opts[:d]

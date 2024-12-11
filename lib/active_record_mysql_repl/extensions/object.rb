@@ -71,14 +71,14 @@ module ActiverecordMysqlRepl
       def csv(orientation = nil)
         arr = if self.is_a?(Array)
                 self
-              elsif self.is_a?(ActiveRecord::Relation)
+              elsif self.is_a?(::ActiveRecord::Relation)
                 self.to_a
               else
                 [self]
               end
 
         arr = arr.map do |e|
-          if e.is_a?(ActiveRecord::Base)
+          if e.is_a?(::ActiveRecord::Base)
             values =  e.attributes.transform_values do |v|
               next JSON.pretty_generate(v) if v.is_a?(Enumerable) && v.size > 0
               next 'NULL' if v.nil?
