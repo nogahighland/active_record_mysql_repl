@@ -1,0 +1,3 @@
+---
+BUNDLE_PATH: "vendor/bundle"
+BUNDLE_BUILD__MYSQL2: "--with-mysql-dir=/opt/homebrew/opt/mysql-client@8.4"
