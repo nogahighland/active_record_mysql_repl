@@ -10,6 +10,8 @@ e.g) Using rbenv
 $ rbenv install 3.3.6
 ```
 
+### mysql-client 8.0
+
 e.g) on macOS
 
 ```bash
@@ -67,7 +69,7 @@ https://github.com/nogahighland/active_record_mysql_repl/blob/main/sample_config
 CREATE DATABASE test;
 ```
 
-The sample configuration assumes the sample database is running on 
+The sample configuration assumes the sample database is running on
 127.0.0.1:3306/test (user: root, password: root)
 
 ```
