@@ -8,6 +8,6 @@ test:
         class_name: UserProfile
 
   ignore_columns:
-    user:
+    users:
     - login_id
 
