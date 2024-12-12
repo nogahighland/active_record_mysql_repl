@@ -725,7 +725,7 @@ D, [2024-12-11T23:49:22.406631 #96381] DEBUG -- :    (1.3ms)  select 1 as num
 You can define your own extension script. For example `.upcase_name` is defined on `UserProfile` by the sample extension which is specified in the `.army.sample.yml` file.
 
 - https://github.com/nogahighland/active_record_mysql_repl/blob/9f7c91774b176e1204ed434dad2867721982c660/sample_config/.army.sample.yml#L5
-- https://github.com/nogahighland/active_record_mysql_repl/blob/main/sample_config/.army.sample/extensions/hello.rb
+- https://github.com/nogahighland/active_record_mysql_repl/blob/acaa44684ea4fd135225580431417d6ccd41a988/sample_config/.army.sample/extensions/hello.rb#L1-L9
 
 ```rb
 [3] test(main)> UserProfile.last.upcase_name
