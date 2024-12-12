@@ -405,11 +405,15 @@ https://github.com/nogahighland/active_record_mysql_repl/blob/f52f04770425723f63
 [1] test(main)> User.last.login
 ```
 
+<details><summary>output:</summary>
+
 ```rb
 D, [2024-12-12T22:17:49.291618 #37808] DEBUG -- :   User Load (2.5ms)  SELECT `users`.* FROM `users` ORDER BY `users`.`id` DESC LIMIT 1
 NoMethodError: undefined method `login' for an instance of User
 from /Users/hiroki.kishi/develop/private/active_record_mysql_repl/vendor/bundle/ruby/3.3.0/gems/activemodel-7.2.2/lib/active_model/attribute_methods.rb:512:in `method_missing'
 ```
+
+</details>
 
 ---
 
@@ -420,6 +424,8 @@ You can use transaction by globally defined `transaction`.
 [9] test(main)> up2 = UserProfile.new(id:2, name: 'user2');
 [10] test(main)> transaction { [u2, up2].map(&:save) }
 ```
+
+<details><summary>output:</summary>
 
 ```sql
 [9] test(main)> up2 = UserProfile.new(id:2, name: 'user2');
@@ -433,6 +439,8 @@ D, [2024-12-12T22:25:32.281765 #37808] DEBUG -- :   TRANSACTION (6.4ms)  COMMIT
   [1] true
 ]
 ```
+
+</details>
 
 ---
 
