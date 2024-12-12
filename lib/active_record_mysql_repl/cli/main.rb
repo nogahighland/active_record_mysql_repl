@@ -10,6 +10,11 @@ module ActiveRecordMysqlRepl
   module CLI
     module Main
       def self.run(args)
+        if args.empty?
+          puts "ActiveRecordMysqlRepl Version: #{VERSION}"
+          return
+        end
+
         if args[0] == '--zsh-completion'
           puts ZshCompletion.generate
           return
