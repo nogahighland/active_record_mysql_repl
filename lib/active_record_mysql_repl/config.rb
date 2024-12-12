@@ -14,7 +14,7 @@ module ActiveRecordMysqlRepl
     end
 
     def associations
-      File.join(@army_config_dir, @associations)
+      File.join(@army_config_dir, @associations) if @associations.present?
     end
 
     def extensions_dir

@@ -27,7 +27,7 @@ module ActiveRecordMysqlRepl
 
       # Analyze the relationship between tables based on the information of *_id columns
       # For example, if users.company_id exists, users belongs_to companies and companies has_many users
-      def self.analyze(tables, association_settings)
+      def self.analyze(tables, association_settings = {})
         analyzed_tables = tables.map { |table| [table, AnalyzedTable.new(table)] }.to_h
 
         analyzed_tables.each do |table_name, table|

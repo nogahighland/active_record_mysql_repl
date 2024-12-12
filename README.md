@@ -383,13 +383,13 @@ https://github.com/nogahighland/active_record_mysql_repl/blob/main/sample_config
 <details><summary>output:</summary>
 
 ```rb
-D, [2024-12-11T23:46:13.637188 #96076] DEBUG -- :   Order Load (2.4ms)  SELECT `orders`.* FROM `orders` ORDER BY `orders`.`id` DESC LIMIT 1
-D, [2024-12-11T23:46:13.642210 #96076] DEBUG -- :   User Load (4.6ms)  SELECT `users`.* FROM `users` WHERE `users`.`id` = '1' LIMIT 1
-D, [2024-12-11T23:46:13.643998 #96076] DEBUG -- :   User Load (1.3ms)  SELECT `users`.* FROM `users` WHERE `users`.`id` = '1' LIMIT 1
-#<User:0x000000012a73f2a0> {
-  :id         => "1",
-  :login_id   => "user1",
-  :profile_id => 1
+
+D, [2024-12-12T18:23:41.382606 #2816] DEBUG -- :   Order Load (8.6ms)  SELECT `orders`.* FROM `orders` ORDER BY `orders`.`id` DESC LIMIT 1
+D, [2024-12-12T18:23:41.389954 #2816] DEBUG -- :   User Load (2.4ms)  SELECT `users`.* FROM `users` WHERE `users`.`id` = '1' LIMIT 1
+D, [2024-12-12T18:23:41.392060 #2816] DEBUG -- :   UserProfile Load (1.8ms)  SELECT `user_profiles`.* FROM `user_profiles` WHERE `user_profiles`.`id` = '1' LIMIT 1
+#<UserProfile:0x000000012330a010> {
+  :id   => "1",
+  :name => "user1"
 }
 ```
 

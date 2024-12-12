@@ -11,9 +11,15 @@ module ActiveRecordMysqlRepl
         puts "Loading tables".gray
 
         tables = ActiveRecord::Base.connection.tables
-        association_settings = Associations.load(army_config.associations)
-
-        analyzed_tables = Associations.analyze(tables, association_settings[db_config_key])
+        association_settings = army_config.associations.present? ? Associations.load(army_config.associations) : {}
+        association_setting = association_settings[db_config_key]
+        analyzed_tables = begin
+                            if association_setting.present?
+                              Associations.analyze(tables, association_setting)
+                            else
+                              Associations.analyze(tables)
+                            end
+                          end
         skipped = []
         analyzed_tables.each do |analyzed_table|
           # defer model definition for tables with `has_many: :xxx, through: xxx` associations
