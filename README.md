@@ -383,7 +383,6 @@ https://github.com/nogahighland/active_record_mysql_repl/blob/main/sample_config
 <details><summary>output:</summary>
 
 ```rb
-
 D, [2024-12-12T18:23:41.382606 #2816] DEBUG -- :   Order Load (8.6ms)  SELECT `orders`.* FROM `orders` ORDER BY `orders`.`id` DESC LIMIT 1
 D, [2024-12-12T18:23:41.389954 #2816] DEBUG -- :   User Load (2.4ms)  SELECT `users`.* FROM `users` WHERE `users`.`id` = '1' LIMIT 1
 D, [2024-12-12T18:23:41.392060 #2816] DEBUG -- :   UserProfile Load (1.8ms)  SELECT `user_profiles`.* FROM `user_profiles` WHERE `user_profiles`.`id` = '1' LIMIT 1
@@ -397,22 +396,140 @@ D, [2024-12-12T18:23:41.392060 #2816] DEBUG -- :   UserProfile Load (1.8ms)  SEL
 
 ---
 
+Even though `users.login_id` column exists, because the column is not an external key it should be ignored from the association.
+The column is ignored because the custom association is defined here and `User#login` causes a `NoMethodError`
 
+https://github.com/nogahighland/active_record_mysql_repl/blob/f52f04770425723f632220bb8031bf4b402020a6/sample_config/.army.sample/associations.sample.yml#L10-L13
 
 ```rb
-[10] test(main)> Order.last.item.brand
+[1] test(main)> User.last.login
 ```
 
-<details><summary>output:</summary>
+```rb
+D, [2024-12-12T22:17:49.291618 #37808] DEBUG -- :   User Load (2.5ms)  SELECT `users`.* FROM `users` ORDER BY `users`.`id` DESC LIMIT 1
+NoMethodError: undefined method `login' for an instance of User
+from /Users/hiroki.kishi/develop/private/active_record_mysql_repl/vendor/bundle/ruby/3.3.0/gems/activemodel-7.2.2/lib/active_model/attribute_methods.rb:512:in `method_missing'
+```
+
+---
+
+You can use transaction by globally defined `transaction`.
 
 ```rb
-D, [2024-12-11T23:46:28.715219 #96076] DEBUG -- :   Order Load (4.1ms)  SELECT `orders`.* FROM `orders` ORDER BY `orders`.`id` DESC LIMIT 1
-D, [2024-12-11T23:46:28.717319 #96076] DEBUG -- :   Item Load (1.7ms)  SELECT `items`.* FROM `items` WHERE `items`.`id` = '1' LIMIT 1
-D, [2024-12-11T23:46:28.731254 #96076] DEBUG -- :   Brand Load (3.1ms)  SELECT `brands`.* FROM `brands` WHERE `brands`.`id` = '1' LIMIT 1
-#<Brand:0x000000012a411ab0> {
-  :id   => "1",
-  :name => "brand1"
-}
+[7] test(main)> u2 = User.new(id:2, profile_id: up2, login_id: 'login2')
+[9] test(main)> up2 = UserProfile.new(id:2, name: 'user2');
+[10] test(main)> transaction { [u2, up2].map(&:save) }
+```
+
+```sql
+[9] test(main)> up2 = UserProfile.new(id:2, name: 'user2');
+[10] test(main)> transaction { [u2, up2].map(&:save) }
+D, [2024-12-12T22:25:32.266790 #37808] DEBUG -- :   TRANSACTION (2.2ms)  BEGIN
+D, [2024-12-12T22:25:32.272857 #37808] DEBUG -- :   User Create (8.3ms)  INSERT INTO `users` (`id`, `login_id`) VALUES ('2', 'login2')
+D, [2024-12-12T22:25:32.275213 #37808] DEBUG -- :   UserProfile Create (2.1ms)  INSERT INTO `user_profiles` (`id`, `name`) VALUES ('2', 'user2')
+D, [2024-12-12T22:25:32.281765 #37808] DEBUG -- :   TRANSACTION (6.4ms)  COMMIT
+[
+  [0] true,
+  [1] true
+]
+```
+
+---
+
+The following example shows the following steps:
+
+1. Find the users with id 1 and 2
+2. Change the login_id of the users
+3. Show the changes
+4. Save the changes in a transaction
+
+```rb
+[11] test(main)> u1, u2 = User.find([1, 2])
+```
+
+<details><summary>Output:</summary>
+
+```rb
+D, [2024-12-12T22:27:55.979311 #37808] DEBUG -- :   User Load (11.7ms)  SELECT `users`.* FROM `users` WHERE `users`.`id` IN ('1', '2')
+[
+  [0] #<User:0x0000000144b325a0> {
+    :id         => "1",
+    :login_id   => "user1",
+    :profile_id => 1
+  },
+  [1] #<User:0x0000000144b32460> {
+    :id         => "2",
+    :login_id   => "login2",
+    :profile_id => nil
+  }
+]
+```
+
+</details>
+
+```rb
+[12] test(main)> [u1, u2].each { |u| u.login_id = "login_id#{u.id}" }
+```
+
+<details><summary>Output:</summary>
+
+```rb
+[
+  [0] #<User:0x0000000144b325a0> {
+    :id         => "1",
+    :login_id   => "login_id1",
+    :profile_id => 1
+  },
+  [1] #<User:0x0000000144b32460> {
+    :id         => "2",
+    :login_id   => "login_id2",
+    :profile_id => nil
+  }
+]
+```
+
+</details>
+
+```rb
+[13] test(main)> [u1, u2].map(&:changes)
+```
+
+<details><summary>Output:</summary>
+
+```rb
+[
+  [0] {
+    "login_id" => [
+      [0] "user1",
+      [1] "login_id1"
+    ]
+  },
+  [1] {
+    "login_id" => [
+      [0] "login2",
+      [1] "login_id2"
+    ]
+  }
+]
+```
+
+</details>
+
+```rb
+[14] test(main)> transaction { [u1, u2].map(&:save)  }
+```
+
+<details><summary>Output:</summary>
+
+```rb
+D, [2024-12-12T22:29:14.179176 #37808] DEBUG -- :   TRANSACTION (1.2ms)  BEGIN
+D, [2024-12-12T22:29:14.188392 #37808] DEBUG -- :   User Update (9.1ms)  UPDATE `users` SET `users`.`login_id` = 'login_id1' WHERE `users`.`id` = '1'
+D, [2024-12-12T22:29:14.191429 #37808] DEBUG -- :   User Update (2.6ms)  UPDATE `users` SET `users`.`login_id` = 'login_id2' WHERE `users`.`id` = '2'
+D, [2024-12-12T22:29:14.196802 #37808] DEBUG -- :   TRANSACTION (5.2ms)  COMMIT
+[
+  [0] true,
+  [1] true
+]
 ```
 
 </details>
