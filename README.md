@@ -301,8 +301,6 @@ D, [2024-12-11T23:46:11.176424 #96076] DEBUG -- :   User Load (2.9ms)  SELECT `u
 
 </details>
 
----
-
 ```rb
 [7] test(main)> Order.last.item
 ```
@@ -320,8 +318,6 @@ D, [2024-12-11T23:46:17.112940 #96076] DEBUG -- :   Item Load (2.2ms)  SELECT `i
 ```
 
 </details>
-
----
 
 ```rb
 [8] test(main)> Order.last.item.category
@@ -476,8 +472,6 @@ D, [2024-12-11T23:48:55.267761 #96381] DEBUG -- :   Order Load (4.4ms)  SELECT `
 
 </details>
 
----
-
 ```rb
 [6] test(main)> Order.all.jp
 ```
@@ -515,11 +509,11 @@ id,user_id,item_id
 1,1,1
 ```
 
-`.cp` is defined to copy to clipboard the receiver object's `.to_s` representation.
-
 </details>
 
 ---
+
+`.cp` is defined to copy to clipboard the receiver object's `.to_s` representation.
 
 ```rb
 [7] test(main)> Order.all.jp.cp
