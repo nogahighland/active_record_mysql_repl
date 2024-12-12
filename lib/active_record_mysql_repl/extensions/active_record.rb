@@ -10,6 +10,7 @@ module ActiverecordMysqlRepl
 
         def describe
           [
+            "# #{self.table_name}",
             exec_sql("DESCRIBE #{self.table_name}").tab(:h),
             exec_sql("SHOW INDEX FROM #{self.table_name}").tab(:h)
           ].join("\n")
