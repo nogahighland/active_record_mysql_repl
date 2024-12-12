@@ -106,6 +106,8 @@ D, [2024-12-12T12:57:38.581127 #2816] DEBUG -- :   User Load (10.5ms)  SELECT `u
 
 </details>
 
+---
+
 `.d` method shows the schema of the table. Let's see the `Order` table schema.
 
 ```rb
@@ -134,6 +136,8 @@ D, [2024-12-12T12:32:20.107976 #2816] DEBUG -- :    (6.9ms)  SHOW INDEX FROM ord
 
 </details>
 
+---
+
 `.ddl` method shows the DDL of the table.
 
 ```rb
@@ -153,6 +157,8 @@ CREATE TABLE `orders` (
 ```
 
 </details>
+
+---
 
 `models` is globally defined to get and array of all the table classes. By `.map(&:d)` you can see the schema of all the tables.
 
@@ -251,6 +257,8 @@ D, [2024-12-12T01:26:36.694081 #25446] DEBUG -- :   User Load (2.2ms)  SELECT `u
 
 </details>
 
+---
+
 To get the last record of order,
 
 ```rb
@@ -269,6 +277,8 @@ D, [2024-12-11T23:45:49.743857 #96076] DEBUG -- :   Order Load (5.5ms)  SELECT `
 ```
 
 </details>
+
+---
 
 You can get the last order's user because `user_id` column exists on `orders` table. For the same reason you can get the order's item and its category too.
 All the associations are chainable by the native functionality of ActiveRecord.
@@ -291,6 +301,8 @@ D, [2024-12-11T23:46:11.176424 #96076] DEBUG -- :   User Load (2.9ms)  SELECT `u
 
 </details>
 
+---
+
 ```rb
 [7] test(main)> Order.last.item
 ```
@@ -308,6 +320,8 @@ D, [2024-12-11T23:46:17.112940 #96076] DEBUG -- :   Item Load (2.2ms)  SELECT `i
 ```
 
 </details>
+
+---
 
 ```rb
 [8] test(main)> Order.last.item.category
@@ -327,6 +341,8 @@ D, [2024-12-11T23:46:21.117169 #96076] DEBUG -- :   Category Load (2.5ms)  SELEC
 ```
 
 </details>
+
+---
 
 A category's parent is fetched from the same table because `parent_id`'s `parent` is treated by `ActiveRecordMysqlRepl` as inplicitly pointing to the same table.
 
@@ -349,6 +365,8 @@ D, [2024-12-11T23:46:23.562496 #96076] DEBUG -- :   Category Load (1.3ms)  SELEC
 ```
 
 </details>
+
+---
 
 You can get user's profile by `.profile` because the custom association is defined here
 
@@ -373,6 +391,8 @@ D, [2024-12-11T23:46:13.643998 #96076] DEBUG -- :   User Load (1.3ms)  SELECT `u
 
 </details>
 
+---
+
 
 
 ```rb
@@ -392,6 +412,8 @@ D, [2024-12-11T23:46:28.731254 #96076] DEBUG -- :   Brand Load (3.1ms)  SELECT `
 ```
 
 </details>
+
+---
 
 By `tab` (an alias to `tabulate`), the filtered records are shown in a table format. `.tab(orientation)` accepts the `:h(orizontal)` (default when <5 columns), and `:v(ertival)` (default when >=5 columns)
 
@@ -414,6 +436,8 @@ D, [2024-12-11T23:48:46.013935 #96381] DEBUG -- :   Order Load (2.2ms)  SELECT `
 
 </details>
 
+---
+
 ```rb
 [4] test(main)> Order.all.tab(:v)
 ```
@@ -433,6 +457,8 @@ D, [2024-12-11T23:48:49.461243 #96381] DEBUG -- :   Order Load (3.2ms)  SELECT `
 
 </details>
 
+---
+
 `.j` is aliased to `.to_json` and `.jp` is defined to generate pretty json.
 
 https://github.com/nogahighland/active_record_mysql_repl/blob/9f7c91774b176e1204ed434dad2867721982c660/lib/active_record_mysql_repl/extensions/object.rb#L128-L132
@@ -449,6 +475,8 @@ D, [2024-12-11T23:48:55.267761 #96381] DEBUG -- :   Order Load (4.4ms)  SELECT `
 ```
 
 </details>
+
+---
 
 ```rb
 [6] test(main)> Order.all.jp
@@ -468,6 +496,8 @@ D, [2024-12-11T23:48:57.250492 #96381] DEBUG -- :   Order Load (1.8ms)  SELECT `
 ```
 
 </details>
+
+---
 
 `.csv(orientation)` is defined to generate csv format. The default orientation is same as `.tab`.
 
@@ -489,6 +519,8 @@ id,user_id,item_id
 
 </details>
 
+---
+
 ```rb
 [7] test(main)> Order.all.jp.cp
 ```
@@ -501,6 +533,8 @@ true
 ```
 
 </details>
+
+---
 
 `.exec_sql` is defined to execute the sql query and return the result as an array of hash.
 
@@ -521,6 +555,8 @@ D, [2024-12-11T23:49:15.879841 #96381] DEBUG -- :    (1.2ms)  select 1
 
 </details>
 
+---
+
 ```rb
 [9] test(main)> exec_sql('select 1').tab
 ```
@@ -537,6 +573,8 @@ D, [2024-12-11T23:49:17.187358 #96381] DEBUG -- :    (2.1ms)  select 1
 ```
 
 </details>
+
+---
 
 ```rb
 [10] test(main)> exec_sql('select 1 as num').tab
@@ -555,6 +593,8 @@ D, [2024-12-11T23:49:22.406631 #96381] DEBUG -- :    (1.3ms)  select 1 as num
 
 </details>
 
+---
+
 You can define your own extension script. For example `.upcase_name` is defined on `UserProfile` by the sample extension which is specified in the `.army.sample.yml` file.
 
 - https://github.com/nogahighland/active_record_mysql_repl/blob/9f7c91774b176e1204ed434dad2867721982c660/sample_config/.army.sample.yml#L5
@@ -572,6 +612,8 @@ USER1
 ```
 
 </details>
+
+---
 
 ## Development
 
