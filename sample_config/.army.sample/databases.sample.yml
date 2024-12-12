@@ -1,9 +1,9 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/nogahighland/active_record_mysql_repl/refs/heads/main/json_schema/databases_schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/nogahighland/active_record_mysql_repl/refs/heads/main/json_schemas/databases_schema.json
 
 test:
   remote_host: 127.0.0.1
   database: test
-  port: 3306
+  port: 33060
   user: root
   password: root
   prompt_color: cyan

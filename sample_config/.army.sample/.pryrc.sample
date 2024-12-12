@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 begin
   require "awesome_print"
   Pry.config.print = proc do |_output, value, pry_instance|
