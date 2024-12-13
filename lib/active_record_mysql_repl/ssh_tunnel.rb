@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
-require 'net/ssh'
-require 'net/ssh/gateway'
+require "net/ssh"
+require "net/ssh/gateway"
 
 module ActiveRecordMysqlRepl
   module SSHTunnel
     EPHEMERAL_PORT = 0
 
     def self.tunnel(db_config)
-      return yield(db_config.port) if block_given? unless db_config.bastion
+      unless db_config.bastion
+        return yield(db_config.port) if block_given?
+      end
 
       puts "Establishing ssh tunnel to #{db_config.remote_host}:#{db_config.port} via #{db_config.ssh_user}#{db_config.bastion}".gray
 

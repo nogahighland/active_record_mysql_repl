@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
-require 'pry'
-require 'colorize'
-require 'active_support'
-require 'active_support/core_ext'
-require 'fileutils'
+require "pry"
+require "colorize"
+require "active_support"
+require "active_support/core_ext"
+require "fileutils"
 
 module ActiveRecordMysqlRepl
   module CLI
@@ -15,34 +15,34 @@ module ActiveRecordMysqlRepl
           return
         end
 
-        if args[0] == '--zsh-completion'
+        if args[0] == "--zsh-completion"
           puts ZshCompletion.generate
           return
         end
 
         opts = CLI::Options.parse(args)
-        army_config = Config.load(opts[:c] || File.join(Dir.home, '.army.yml'))
+        army_config = Config.load(opts[:c] || File.join(Dir.home, ".army.yml"))
 
         db_configs = Database::Configs.load(army_config.database_config)
         db_config_key = opts[:d]
         db_config = db_configs[db_config_key]
         return puts db_configs.keys unless db_config
 
-        generate_erf = opts[:e] == 'erd'
+        generate_erf = opts[:e] == "erd"
 
         SSHTunnel.tunnel(db_config) do |port|
           Database::Connection.connect(db_config, port) do
             Database::Loader.load_tables(db_config_key, army_config, port)
 
             if generate_erf
-              require 'rails_erd/diagram/graphviz'
+              require "rails_erd/diagram/graphviz"
               puts "Generating ERD for #{db_config_key}_erd.pdf".gray
               RailsERD::Diagram::Graphviz.create
-              FileUtils.mv('erd.pdf', "#{db_config_key}_erd.pdf")
+              FileUtils.mv("erd.pdf", "#{db_config_key}_erd.pdf")
               return
             end
 
-            require 'active_record_mysql_repl/extensions'
+            require "active_record_mysql_repl/extensions"
             if army_config.extensions_dir.present?
               puts "Loading custom extensions from #{army_config.extensions_dir}".gray
               Extensions.load_external(army_config.extensions_dir)
@@ -57,8 +57,8 @@ module ActiveRecordMysqlRepl
       end
 
       def self.clear_screen
-        system('clear')
-        system('cls')
+        system("clear")
+        system("cls")
       end
     end
   end

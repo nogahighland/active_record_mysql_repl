@@ -5,29 +5,28 @@ module ActiverecordMysqlRepl
     module ActiveRecord
       module Base
         def as(name = nil)
-          self.reflect_on_all_associations(name).map(&:name)
+          reflect_on_all_associations(name).map(&:name)
         end
 
         def describe
           [
-            "# #{self.table_name}",
-            exec_sql("DESCRIBE #{self.table_name}").tab(:h),
-            exec_sql("SHOW INDEX FROM #{self.table_name}").tab(:h)
+            "# #{table_name}",
+            exec_sql("DESCRIBE #{table_name}").tab(:h),
+            exec_sql("SHOW INDEX FROM #{table_name}").tab(:h)
           ].join("\n")
         end
 
-        alias desc describe
-        alias d describe
+        alias_method :desc, :describe
+        alias_method :d, :describe
 
         def show_ddl
-          exec_sql("SHOW CREATE TABLE #{self.table_name}")[0]['Create Table']
+          exec_sql("SHOW CREATE TABLE #{table_name}")[0]["Create Table"]
         end
 
-        alias ddl show_ddl
+        alias_method :ddl, :show_ddl
       end
 
       ::ActiveRecord::Base.extend(Base)
     end
   end
 end
-

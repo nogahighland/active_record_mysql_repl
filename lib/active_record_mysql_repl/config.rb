@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'yaml'
+require "yaml"
 
 module ActiveRecordMysqlRepl
   class Config
@@ -9,7 +9,7 @@ module ActiveRecordMysqlRepl
     end
 
     def database_config
-      raise 'database_config is not defined' unless @database_config
+      raise "database_config is not defined" unless @database_config
       File.join(@army_config_dir, @database_config)
     end
 
@@ -29,10 +29,10 @@ module ActiveRecordMysqlRepl
 
     def initialize(path, config)
       @army_config_dir = File.dirname(File.absolute_path(path))
-      @database_config = config['database_config']
-      @associations = config['associations']
-      @extensions_dir = config['extensions_dir']
-      @pryrc = config['pryrc']
+      @database_config = config["database_config"]
+      @associations = config["associations"]
+      @extensions_dir = config["extensions_dir"]
+      @pryrc = config["pryrc"]
     end
   end
 end

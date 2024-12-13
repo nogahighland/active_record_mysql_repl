@@ -26,4 +26,3 @@ module ActiverecordMysqlRepl
     Kernel.include(Global)
   end
 end
-

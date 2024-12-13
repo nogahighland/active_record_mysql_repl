@@ -13,11 +13,11 @@ module ActiverecordMysqlRepl
         end
 
         model.column_names.each do |column|
-          define_method("#{model.table_name.singularize}_by_#{column}") do
+          define_method(:"#{model.table_name.singularize}_by_#{column}") do
             model.where(column => self)
           end
 
-          define_method("#{model.table_name.singularize}_#{column}_like") do
+          define_method(:"#{model.table_name.singularize}_#{column}_like") do
             model.where("#{column} like ?", "%#{self}%")
           end
         end
@@ -29,4 +29,3 @@ module ActiverecordMysqlRepl
     Enumerable.include Tabler
   end
 end
-

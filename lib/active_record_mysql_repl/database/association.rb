@@ -36,18 +36,18 @@ module ActiveRecordMysqlRepl
           columns.each do |column|
             next if association_setting.present? && association_settings.ignore_columns(table_name).include?(column.name)
 
-            associatable = column.name.gsub(/_id$/, '') if column.name.end_with?('_id')
-            next if associatable.blank? || associatable == 'class' # reserved word
+            associatable = column.name.gsub(/_id$/, "") if column.name.end_with?("_id")
+            next if associatable.blank? || associatable == "class" # reserved word
 
             if analyzed_tables.keys.include?(associatable.pluralize)
               table.belongs_to << associatable.singularize if associatable
               analyzed_tables[associatable.pluralize].has_many << table_name.pluralize
             else
-              associatable_table_name = associatable.split('_').last
-              if analyzed_tables.keys.include?(associatable_table_name.pluralize)
-                table.belongs_to << { name: associatable, class_name: associatable_table_name.classify, foreign_key: :id }
+              associatable_table_name = associatable.split("_").last
+              table.belongs_to << if analyzed_tables.keys.include?(associatable_table_name.pluralize)
+                {name: associatable, class_name: associatable_table_name.classify, foreign_key: :id}
               else
-                table.belongs_to << { name: associatable, class_name: table_name.singularize.classify, foreign_key: :id }
+                {name: associatable, class_name: table_name.singularize.classify, foreign_key: :id}
               end
             end
           end
@@ -71,12 +71,12 @@ module ActiveRecordMysqlRepl
       end
 
       def [](table)
-        table = (@association.keys - ['ignore_columns']) & [table]
+        table = (@association.keys - ["ignore_columns"]) & [table]
         @association[table.first] if table.present?
       end
 
       def ignore_columns(table)
-        @association.fetch('ignore_columns', {}).fetch(table, [])
+        @association.fetch("ignore_columns", {}).fetch(table, [])
       end
     end
   end

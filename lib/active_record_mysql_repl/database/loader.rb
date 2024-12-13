@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'json'
-require 'active_record'
-require 'active_support/all'
+require "json"
+require "active_record"
+require "active_support/all"
 
 module ActiveRecordMysqlRepl
   module Database
@@ -13,13 +13,12 @@ module ActiveRecordMysqlRepl
         tables = ActiveRecord::Base.connection.tables
         association_settings = army_config.associations.present? ? Associations.load(army_config.associations) : {}
         association_setting = association_settings[db_config_key]
-        analyzed_tables = begin
-                            if association_setting.present?
-                              Associations.analyze(tables, association_setting)
-                            else
-                              Associations.analyze(tables)
-                            end
-                          end
+        analyzed_tables = if association_setting.present?
+          Associations.analyze(tables, association_setting)
+        else
+          Associations.analyze(tables)
+        end
+
         skipped = []
         analyzed_tables.each do |analyzed_table|
           # defer model definition for tables with `has_many: :xxx, through: xxx` associations

@@ -1,28 +1,28 @@
 # frozen_string_literal: true
 
-require 'terminal-table'
-require 'csv'
-require 'clipboard'
-require 'json'
+require "terminal-table"
+require "csv"
+require "clipboard"
+require "json"
 
 module ActiverecordMysqlRepl
   module Extensions
     module Object
       def tabulate(orientation = nil)
-        arr = if self.is_a?(Array)
-                self
-              elsif self.is_a?(::ActiveRecord::Relation)
-                self.to_a
-              else
-                [self]
-              end
+        arr = if is_a?(Array)
+          self
+        elsif is_a?(::ActiveRecord::Relation)
+          to_a
+        else
+          [self]
+        end
 
         arr = arr.map do |e|
           if e.is_a?(::ActiveRecord::Base)
-            values =  e.attributes.transform_values do |v|
+            values = e.attributes.transform_values do |v|
               next JSON.pretty_generate(v) if v.is_a?(Enumerable) && v.size > 0
-              next 'NULL' if v.nil?
-              next '""' if v == ''
+              next "NULL" if v.nil?
+              next '""' if v == ""
               v.to_s
             end
             next values
@@ -34,17 +34,17 @@ module ActiverecordMysqlRepl
         raise "#{arr} contains Hashes with different keys".red unless arr.map(&:keys).uniq.size == 1
 
         orientation = case orientation
-                      when :vertical, :v
-                        :vertical
-                      when :horizontal, :h
-                        :horizontal
-                      else
-                        if arr.first.keys.size > 5
-                          :vertical
-                        else
-                          :horizontal
-                        end
-                      end
+        when :vertical, :v
+          :vertical
+        when :horizontal, :h
+          :horizontal
+        else
+          if arr.first.keys.size > 5
+            :vertical
+          else
+            :horizontal
+          end
+        end
 
         t = Terminal::Table.new
 
@@ -54,7 +54,7 @@ module ActiverecordMysqlRepl
           t.rows = arr.map(&:values)
 
         when :vertical
-          t.headings = ['Name', 'Value']
+          t.headings = ["Name", "Value"]
           arr.each.with_index do |row, i|
             row.each { |col, val| t.add_row [col, val] }
             t.add_separator if i < arr.size - 1
@@ -64,25 +64,25 @@ module ActiverecordMysqlRepl
         t.to_s
       end
 
-      alias tab tabulate
-      alias table tabulate
-      alias to_table tabulate
+      alias_method :tab, :tabulate
+      alias_method :table, :tabulate
+      alias_method :to_table, :tabulate
 
       def csv(orientation = nil)
-        arr = if self.is_a?(Array)
-                self
-              elsif self.is_a?(::ActiveRecord::Relation)
-                self.to_a
-              else
-                [self]
-              end
+        arr = if is_a?(Array)
+          self
+        elsif is_a?(::ActiveRecord::Relation)
+          to_a
+        else
+          [self]
+        end
 
         arr = arr.map do |e|
           if e.is_a?(::ActiveRecord::Base)
-            values =  e.attributes.transform_values do |v|
+            values = e.attributes.transform_values do |v|
               next JSON.pretty_generate(v) if v.is_a?(Enumerable) && v.size > 0
-              next 'NULL' if v.nil?
-              next '""' if v == ''
+              next "NULL" if v.nil?
+              next '""' if v == ""
               v.to_s
             end
             next values
@@ -94,17 +94,17 @@ module ActiverecordMysqlRepl
         raise "#{arr} contains Hashes with different keys".red unless arr.map(&:keys).uniq.size == 1
 
         orientation = case orientation
-                      when :vertical, :v
-                        :vertical
-                      when :horizontal, :h
-                        :horizontal
-                      else
-                        if arr.first.keys.size > 5
-                          :vertical
-                        else
-                          :horizontal
-                        end
-                      end
+        when :vertical, :v
+          :vertical
+        when :horizontal, :h
+          :horizontal
+        else
+          if arr.first.keys.size > 5
+            :vertical
+          else
+            :horizontal
+          end
+        end
 
         CSV.generate do |csv|
           case orientation
@@ -121,11 +121,11 @@ module ActiverecordMysqlRepl
       end
 
       def copy
-        Clipboard.copy(self.to_s)
+        Clipboard.copy(to_s)
       end
-      alias cp copy
+      alias_method :cp, :copy
 
-      alias j to_json
+      alias_method :j, :to_json
 
       def jp
         JSON.pretty_generate(JSON.parse(to_json))
@@ -135,4 +135,3 @@ module ActiverecordMysqlRepl
 
   ::Object.include(Extensions::Object)
 end
-

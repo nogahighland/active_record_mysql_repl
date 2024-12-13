@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_erd/diagram/graphviz'
+require "rails_erd/diagram/graphviz"
 
 module ActiveRecordMysqlRepl
   module Erd

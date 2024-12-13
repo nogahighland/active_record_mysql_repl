@@ -27,7 +27,7 @@ module ActiveRecordMysqlRepl
     private
 
     class Config
-      attr_reader *%i[
+      attr_reader(*%i[
         bastion
         ssh_user
         remote_host
@@ -36,7 +36,7 @@ module ActiveRecordMysqlRepl
         user
         password
         prompt_color
-      ]
+      ])
 
       def initialize(config)
         @bastion = config["bastion"]
