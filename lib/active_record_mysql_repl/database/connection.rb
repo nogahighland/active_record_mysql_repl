@@ -15,7 +15,7 @@ module ActiveRecordMysqlRepl
           database: db_config.database
         }
 
-        ActiveRecord::Base.logger = Logger.new(STDOUT)
+        ActiveRecord::Base.logger = Logger.new($stdout)
         ActiveRecord::Base.establish_connection(conn)
 
         puts "Ensureing connection to #{db_config.database} on port 127.0.0.1:#{port}".gray

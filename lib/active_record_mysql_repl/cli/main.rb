@@ -39,7 +39,7 @@ module ActiveRecordMysqlRepl
               puts "Generating ERD for #{db_config_key}_erd.pdf".gray
               RailsERD::Diagram::Graphviz.create
               FileUtils.mv("erd.pdf", "#{db_config_key}_erd.pdf")
-              return
+              next
             end
 
             require "active_record_mysql_repl/extensions"

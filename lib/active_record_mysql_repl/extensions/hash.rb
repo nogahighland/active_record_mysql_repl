@@ -13,6 +13,10 @@ module ActiverecordMysqlRepl
         end
       end
 
+      def respond_to_missing?
+        true
+      end
+
       ::Hash.include(Hash)
     end
   end
