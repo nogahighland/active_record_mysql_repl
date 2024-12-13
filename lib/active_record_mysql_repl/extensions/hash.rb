@@ -13,7 +13,7 @@ module ActiverecordMysqlRepl
         end
       end
 
-      def respond_to_missing?
+      def respond_to_missing?(sym, include_private)
         true
       end
 
