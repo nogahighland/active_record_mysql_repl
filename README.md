@@ -624,6 +624,77 @@ D, [2024-12-11T23:48:57.250492 #96381] DEBUG -- :   Order Load (1.8ms)  SELECT `
 
 </details>
 
+Convenient syntax sugar such as `'value'.{table_name}` `'value'.{table_name}s` `'value'.{table_name}_by_{column_name}` are available as dynamically defined methods.
+
+```rb
+[1] test(main)> :'1'.order
+```
+
+<details><summary>output:</summary>
+
+```rb
+D, [2024-12-13T11:40:17.290699 #48059] DEBUG -- :   Order Load (2.2ms)  SELECT `orders`.* FROM `orders` WHERE `orders`.`id` = '1' LIMIT 1
+#<Order:0x0000000122e7f0e0> {
+  :id      => "1",
+  :user_id => "1",
+  :item_id => "1"
+}
+```
+
+</details>
+
+```rb
+[2] test(main)> '1'.order
+```
+
+<details><summary>output:</summary>
+
+```rb
+D, [2024-12-13T11:40:21.217724 #48059] DEBUG -- :   Order Load (2.4ms)  SELECT `orders`.* FROM `orders` WHERE `orders`.`id` = '1' LIMIT 1
+#<Order:0x000000010512c450> {
+  :id      => "1",
+  :user_id => "1",
+  :item_id => "1"
+}
+```
+
+</details>
+
+```rb
+[3] test(main)> '1'.orders
+```
+
+<details><summary>output:</summary>
+
+```rb
+D, [2024-12-13T11:40:22.781925 #48059] DEBUG -- :   Order Load (2.7ms)  SELECT `orders`.* FROM `orders` WHERE `orders`.`id` = '1' LIMIT 1
+#<Order:0x0000000105129750> {
+  :id      => "1",
+  :user_id => "1",
+  :item_id => "1"
+}
+```
+
+</details>
+
+```rb
+[4] test(main)> '1'.user_by_profile_id
+```
+
+<details><summary>output:</summary>
+
+```rb
+D, [2024-12-13T11:40:47.497002 #48059] DEBUG -- :   User Load (7.9ms)  SELECT `users`.* FROM `users` WHERE `users`.`profile_id` = 1
+[
+  [0] #<User:0x00000001243fc0f8> {
+    :id         => "1",
+    :login_id   => "login_id1",
+    :profile_id => 1
+  }
+]
+```
+
+</details>
 ---
 
 `.csv(orientation)` is defined to generate csv format. The default orientation is same as `.tab`.
