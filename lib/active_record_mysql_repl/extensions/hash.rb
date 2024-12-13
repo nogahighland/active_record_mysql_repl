@@ -14,7 +14,7 @@ module ActiverecordMysqlRepl
       end
 
       def respond_to_missing?(sym, include_private)
-        true
+        (keys & [name, name.to_s]).present? || name.to_s.end_with?("=") && keys.include?(name.to_s[0..-2])
       end
 
       ::Hash.include(Hash)
