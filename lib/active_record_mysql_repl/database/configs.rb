@@ -6,7 +6,7 @@ module ActiveRecordMysqlRepl
       attr_reader :configs
 
       def self.load(path)
-        new(YAML.load_file(path))
+        new(YAML.load_file(path, aliases: true))
       end
 
       def [](key)
