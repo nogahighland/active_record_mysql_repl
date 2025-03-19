@@ -21,6 +21,7 @@ module ActiverecordMysqlRepl
           if e.is_a?(::ActiveRecord::Base)
             values = e.attributes.transform_values do |v|
               next JSON.pretty_generate(v) if v.is_a?(Enumerable) && v.size > 0
+              next v.to_time if v.is_a?(Time) || v.is_a?(Date)
               next "NULL" if v.nil?
               next '""' if v == ""
               v.to_s
