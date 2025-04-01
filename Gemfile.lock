@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    active_record_mysql_repl (0.1.8)
+    active_record_mysql_repl (0.1.9)
       activerecord (~> 7.1)
       activesupport (~> 7.2)
       awesome_print (~> 1.9)
