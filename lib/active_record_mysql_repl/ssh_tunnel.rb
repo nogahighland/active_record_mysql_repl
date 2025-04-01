@@ -12,7 +12,7 @@ module ActiveRecordMysqlRepl
         return yield(db_config.port) if block_given?
       end
 
-      puts "Establishing ssh tunnel to #{db_config.remote_host}:#{db_config.port} via #{db_config.ssh_user}#{db_config.bastion}".gray
+      puts "Establishing ssh tunnel to #{db_config.remote_host}:#{db_config.port} via #{db_config.ssh_user}@#{db_config.bastion}".gray
 
       gateway = Net::SSH::Gateway.new(db_config.bastion, db_config.ssh_user)
       gateway.open(db_config.remote_host, db_config.port) do |port|

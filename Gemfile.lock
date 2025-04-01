@@ -40,6 +40,8 @@ GEM
     awesome_print (1.9.2)
     backport (1.2.0)
     base64 (0.2.0)
+    bcrypt_pbkdf (1.1.1)
+    bcrypt_pbkdf (1.1.1-arm64-darwin)
     benchmark (0.4.0)
     bigdecimal (3.1.8)
     byebug (11.1.3)
@@ -53,6 +55,7 @@ GEM
     diff-lcs (1.5.1)
     drb (2.2.1)
     e2mmap (0.1.0)
+    ed25519 (1.3.0)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.6.0)
@@ -172,11 +175,13 @@ PLATFORMS
 
 DEPENDENCIES
   active_record_mysql_repl!
+  bcrypt_pbkdf (~> 1.1)
   byebug (~> 11.1.3)
+  ed25519 (~> 1.3)
   rake (~> 13.0)
   rspec (~> 3.0)
   solargraph (~> 0.50.0)
   standard (~> 1.3)
 
 BUNDLED WITH
-   2.6.1
+   2.6.6
