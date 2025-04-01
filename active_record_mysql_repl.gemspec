@@ -45,4 +45,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "pry", "~> 0.14.2"
   spec.add_dependency "rails-erd", "~> 1.7"
   spec.add_dependency "terminal-table", "~> 3.0"
+  spec.add_dependency "ed25519", "~> 1.3"
+  spec.add_dependency "bcrypt_pbkdf", "~> 1.1"
 end
