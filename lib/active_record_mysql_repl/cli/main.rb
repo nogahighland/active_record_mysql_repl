@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require "pry"
+require "irb"
 require "colorize"
 require "active_support"
 require "active_support/core_ext"
@@ -49,9 +49,20 @@ module ActiveRecordMysqlRepl
             end
 
             clear_screen
-            Pry.config.prompt_name = db_config_key.black.send(:"on_#{db_config.prompt_color}")
-            Pry.config.rc_file = army_config.pryrc if army_config.pryrc.present?
-            Pry.start
+            IRB.conf[:PROMPT] = {
+              ARMY: {
+                PROMPT_I: "#{db_config_key.black.send(:"on_#{db_config.prompt_color}")}> ",
+                PROMPT_S: nil,
+                PROMPT_C: nil,
+                RETURN: nil
+              }
+            }
+            IRB.conf[:PROMPT_MODE] = :ARMY
+            loop do
+              ARGV.pop
+              break if ARGV.empty?
+            end
+            IRB.start
           end
         end
       end

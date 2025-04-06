@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Hiroki Kishi"]
   spec.email = ["noga.highland@gmail.com"]
 
-  spec.summary = "MySQL REPL featured by ActiveRecord and Pry"
-  spec.description = "MySQL REPL featured by ActiveRecord and Pry"
+  spec.summary = "MySQL REPL featured by ActiveRecord and IRB"
+  spec.description = "MySQL REPL featured by ActiveRecord and IRB"
   spec.homepage = "https://github.com/nogahighland/active_record_mysql_repl"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
@@ -42,7 +42,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "mysql2", "~> 0.5.6"
   spec.add_dependency "net-ssh", "~> 7.3"
   spec.add_dependency "net-ssh-gateway", "~> 2.0"
-  spec.add_dependency "pry", "~> 0.14.2"
+  spec.add_dependency "irb"
   spec.add_dependency "rails-erd", "~> 1.7"
   spec.add_dependency "terminal-table", "~> 3.0"
   spec.add_dependency "ed25519", "~> 1.3"
