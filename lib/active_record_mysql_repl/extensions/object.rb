@@ -18,17 +18,15 @@ module ActiverecordMysqlRepl
         end
 
         arr = arr.map do |e|
-          if e.is_a?(::ActiveRecord::Base)
-            values = e.attributes.transform_values do |v|
-              next JSON.pretty_generate(v) if v.is_a?(Enumerable) && v.size > 0
-              next v.to_time if v.is_a?(Time) || v.is_a?(Date)
-              next "NULL" if v.nil?
-              next '""' if v == ""
-              v.to_s
-            end
-            next values
+          e = e.attributes if e.is_a?(::ActiveRecord::Base)
+          next e unless e.is_a?(Hash)
+          next e.transform_values do |v|
+            next JSON.pretty_generate(v) if v.is_a?(Enumerable) && v.size > 0
+            next v.to_time if v.is_a?(Time) || v.is_a?(Date)
+            next "NULL" if v.nil?
+            next '""' if v == ""
+            v.to_s
           end
-          e
         end
 
         raise "#{arr} is not an array of hash".red unless arr.all? { |e| e.is_a?(Hash) }
@@ -79,17 +77,15 @@ module ActiverecordMysqlRepl
         end
 
         arr = arr.map do |e|
-          if e.is_a?(::ActiveRecord::Base)
-            values = e.attributes.transform_values do |v|
-              next JSON.pretty_generate(v) if v.is_a?(Enumerable) && v.size > 0
-              next v.to_time if v.is_a?(Time) || v.is_a?(Date)
-              next "NULL" if v.nil?
-              next '""' if v == ""
-              v.to_s
-            end
-            next values
+          e = e.attributes if e.is_a?(::ActiveRecord::Base)
+          next e unless e.is_a?(Hash)
+          next e.transform_values do |v|
+            next JSON.pretty_generate(v) if v.is_a?(Enumerable) && v.size > 0
+            next v.to_time if v.is_a?(Time) || v.is_a?(Date)
+            next "NULL" if v.nil?
+            next '""' if v == ""
+            v.to_s
           end
-          e
         end
 
         raise "#{arr} is not an array of hash".red unless arr.all? { |e| e.is_a?(Hash) }
